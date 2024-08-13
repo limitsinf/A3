@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login - FriendShop</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/A1_Q8_stylesheet.css">
+    <script src="/A2_Q8.JS" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="/home_page.html">
+                    <h1>FriendShop <img src="/Images/logo.png" alt="Logo" style="width:35px;"></h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/home_page.html">Home</a></li>
+                    <li><a href="/find_pets.html">Find a Dog/Cat</a></li>
+                    <li><a href="/dog_care.html">Dog Care</a></li>
+                    <li><a href="/cat_care.html">Cat Care</a></li>
+                    <li><a href="/give_away.html">Have a Pet to Give Away</a></li>
+                    <li><a href="/contact_us.html">Contact Us</a></li>
+                    <li><a href="/login.html">Login</a></li>
+                    <li><a href="/create_account.html">Sign up</a></li>
+                    <li><a href="/logout.html" id="logout-button">Logout</a></li>
+                </ul>
+            </nav>
+            <div id="date-time"></div>
+        </header>
+        <aside class="side-menu">
+            <ul>
+                <li><a href="/home_page.html">Home</a></li>
+                <li><a href="/find_pets.html">Find a Dog/Cat</a></li>
+                <li><a href="/dog_care.html">Dog Care</a></li>
+                <li><a href="/cat_care.html">Cat Care</a></li>
+                <li><a href="/give_away.html">Have a Pet to Give Away</a></li>
+                <li><a href="/contact_us.html">Contact Us</a></li>
+                <li><a href="/login.html">Login</a></li>
+                    <li><a href="/create_account.html">Sign up</a></li>
+                    <li><a href="/logout.html" id="logout-button">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="content">
+            <h2>Login</h2>
+            <form action="/api/login" method="POST">
+                <fieldset>
+                    <legend>Login Information</legend>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <input type="submit" value="Login">
+                    <input type="reset" value="Clear">
+                </fieldset>
+            </form>
+        </main>
+        <footer class="footer">
+            <a href="/disclaimer.html">
+                <p>Privacy/Disclaimer Statement: Your information will not be sold or misused, and we protect your website browsing from any incorrect information input by a pet owner.</p>
+            </a>
+        </footer>
+    </div>
+</body>
+</html>
+<script>
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    if (status === 'fail') {
+        alert('Login failed. Please check your username and password and try again.');
+    } else if (status === 'success') {
+        alert('Login successful!');
+    }
+
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url + '?status=success'; 
+            } else {
+                alert('An unexpected error occurred. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>

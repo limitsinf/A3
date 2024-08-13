@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number of Visits</title>
+    <link rel="stylesheet" href="/A3_Q1-Q3_stylesheet.css">
+</head>
+<body>
+    <h1>Track Number of Visits</h1>
+    <div id="visitInfo"></div>
+    <script>
+        fetch('/api/numOfVisits')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('visitInfo').innerHTML = data;
+            });
+    </script>
+    <a href="/">Go Back</a>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create an Account - FriendShop</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/A1_Q8_stylesheet.css">
+    <script src="/A2_Q8.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="/home_page.html">
+                    <h1>FriendShop <img src="/Images/logo.png" alt="Logo" style="width:35px;"></h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/home_page.html">Home</a></li>
+                    <li><a href="/find_pets.html">Find a Dog/Cat</a></li>
+                    <li><a href="/dog_care.html">Dog Care</a></li>
+                    <li><a href="/cat_care.html">Cat Care</a></li>
+                    <li><a href="/give_away.html">Have a Pet to Give Away</a></li>
+                    <li><a href="/contact_us.html">Contact Us</a></li>
+                    <li><a href="/login.html">Login</a></li>
+                    <li><a href="/create_account.html">Sign up</a></li>
+                    <li><a href="/logout.html" id="logout-button">Logout</a></li>
+                </ul>
+            </nav>
+            <div id="date-time"></div>
+        </header>
+        <aside class="side-menu">
+            <ul>
+                <li><a href="/home_page.html">Home</a></li>
+                <li><a href="/find_pets.html">Find a Dog/Cat</a></li>
+                <li><a href="/dog_care.html">Dog Care</a></li>
+                <li><a href="/cat_care.html">Cat Care</a></li>
+                <li><a href="/give_away.html">Have a Pet to Give Away</a></li>
+                <li><a href="/contact_us.html">Contact Us</a></li>
+                <li><a href="/login.html">Login</a></li>
+                <li><a href="/create_account.html">Sign up</a></li>
+                <li><a href="/logout.html" id="logout-button">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="content">
+            <h2>Create an Account</h2>
+            <script>
+                const urlParams = new URLSearchParams(window.location.search);
+                const error = urlParams.get('error');
+                
+                if (error === 'invalid') {
+                    alert('Invalid username or password format.');
+                } else if (error === 'exists') {
+                    alert('Username already exists. Please choose another.');
+                }
+            </script>
+            <form action="/api/createAccount" method="POST">
+                <fieldset>
+                    <legend>Account Information</legend>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <input type="submit" value="Create Account">
+                    <input type="reset" value="Clear">
+                </fieldset>
+            </form>
+        </main>
+        <footer class="footer">
+            <a href="/disclaimer.html">
+                <p>Privacy/Disclaimer Statement: Your information will not be sold or misused, and we protect your website browsing from any incorrect information input by a pet owner.</p>
+            </a>
+        </footer>
+    </div>
+</body>
+</html>

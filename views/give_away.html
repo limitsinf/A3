@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pet give away - FriendShop</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/A1_Q8_stylesheet.css">
+    <script src="/A2_Q8.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="/home_page.html">
+                    <h1>FriendShop <img src="/Images/logo.png" alt="Logo" style="width:35px;"></h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/home_page.html">Home</a></li>
+                    <li><a href="/find_pets.html">Find a Dog/Cat</a></li>
+                    <li><a href="/dog_care.html">Dog Care</a></li>
+                    <li><a href="/cat_care.html">Cat Care</a></li>
+                    <li><a href="/give_away.html">Have a Pet to Give Away</a></li>
+                    <li><a href="/contact_us.html">Contact Us</a></li>
+                    <li><a href="/login.html">Login</a></li>
+                    <li><a href="/create_account.html">Sign up</a></li>
+                    <li><a href="/logout.html" id="logout-button">Logout</a></li>
+                </ul>
+            </nav>
+            <div id="date-time"></div>
+        </header>
+        <aside class="side-menu">
+            <ul>
+                <li><a href="/home_page.html">Home</a></li>
+                    <li><a href="/find_pets.html">Find a Dog/Cat</a></li>
+                    <li><a href="/dog_care.html">Dog Care</a></li>
+                    <li><a href="/cat_care.html">Cat Care</a></li>
+                    <li><a href="/give_away.html">Have a Pet to Give Away</a></li>
+                    <li><a href="/contact_us.html">Contact Us</a></li>
+                    <li><a href="/login.html">Login</a></li>
+                    <li><a href="/create_account.html">Sign up</a></li>
+                    <li><a href="/logout.html" id="logout-button">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="content">
+            
+    
+            <div id="login-section">
+                <h3>Please Log In</h3><br>
+                <h4>You must be logged in to enter a give away form.</h4>
+                <form id="login-form" action="/api/loginAndGiveAway" method="POST">
+                    <fieldset>
+                    <legend>Login Information</legend>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <button type="submit">Login</button>
+                    </fieldset>
+                </form>
+            </div>
+        
+            <div id="giveaway-form-section" style="display:none;">
+                <h2>Pet give away</h2>
+                <form id="giveaway-form" action="/api/giveAwayPet" method="POST">
+                    <fieldset>
+                        <legend>Pet giveaway form</legend>
+                        <label for="pet-type">Cat or Dog:</label>
+                        <select id="pet-type" name="type">
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="any">Mix Breed</option>
+                        </select><br><br>
+                        <label for="breed">Breed:</label>
+                        <input type="text" id="breed" name="breed"><br><br>
+                        <label for="age">Age:</label>
+                        <select id="age" name="age">
+                            <option value="puppy-kitten">Puppy/Kitten</option>
+                            <option value="adult">Adult</option>
+                            <option value="senior">Senior</option>
+                            <option value="any">Doesn't matter</option>
+                        </select><br><br>
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="any">Doesn't matter</option>
+                        </select><br><br>
+                        
+                        <label for="other-pets">Friendly towards other animals:</label>
+                        <select id="other-pets" name="other-pets">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="any">Doesn't matter</option>
+                        </select><br><br>
+                        
+                        <label for="small-children">Child friendly:</label>
+                        <select id="small-children" name="small-children">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="any">Doesn't matter</option>
+                        </select><br><br>
+        
+                        <label for="comment">Additional comments:</label>
+                        <textarea id="comment" name="description"></textarea><br><br>
+                        <label for="owner-name">Owner's Name:</label>
+                        <input type="text" id="owner-name" name="owner-name"><br><br>
+                        <label for="owner-email">Owner's Email:</label>
+                        <input type="email" id="owner-email" name="owner-email"><br><br>
+                        <input type="submit" value="Submit">
+                        <input type="reset" value="Clear">
+                    </fieldset>
+                </form>
+            </div>
+        </main>
+        <footer class="footer">
+            <a href="/disclaimer.html">
+                <p>Privacy/Disclaimer Statement: Your information will not be sold or misused, and we protect your website browsing from any incorrect information input by a pet owner.</p>
+            </a>
+        </footer>
+    </div>
+</body>
+</html>
+<script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const loggedIn = urlParams.get('loggedIn');
+    const status = urlParams.get('status');
+
+    if (loggedIn === 'true') {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('giveaway-form-section').style.display = 'block';
+
+        if (status === 'success') {
+            alert('Pet added successfully.');
+        }
+    } else {
+        
+        document.getElementById('login-section').style.display = 'block';
+        document.getElementById('giveaway-form-section').style.display = 'none';
+    }
+
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/api/loginForGiveAway', {  
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'success') {
+                alert('Login successful!'); 
+                window.location.href = '/give_away.html?loggedIn=true'; 
+            } else if (data === 'fail') {
+                alert('Login failed. Please check your username and password and try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>
